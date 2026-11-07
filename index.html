@@ -87,6 +87,16 @@
 </div>
 </main>
 <script>
+// Reset link: adding ?reset=1 clears the saved early-unlock flag and restores the countdown.
+(function(){
+  const params=new URLSearchParams(window.location.search);
+  if(params.get('reset')==='1'){
+    try { localStorage.removeItem('missionNehaUnlocked'); } catch(e) {}
+    params.delete('reset');
+    const cleanUrl=window.location.pathname+(params.toString()?'?'+params.toString():'')+window.location.hash;
+    window.history.replaceState({},document.title,cleanUrl);
+  }
+})();
 // Omkar's private shortcut: tap the mission lock ten times to preview early.
 (function(){
   const lock=document.getElementById('missionLock');
